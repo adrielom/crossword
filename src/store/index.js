@@ -7,12 +7,16 @@ const INITIAL_STATE = {
 	counter: 0,
 };
 
-function addWord(state = [], action) {
+const INITIAL_WORDS = {
+	words: [],
+};
+
+function addWord(state = INITIAL_WORDS, action) {
 	switch (action.type) {
 		case 'ADD_WORD':
 			return {
 				...state,
-				words: [ ...state, action.word ],
+				words: [ ...state.words, action.word ],
 			};
 		default:
 			return state;
@@ -36,6 +40,6 @@ function dimensions(state = INITIAL_STATE, action) {
 
 const reducer = combineReducers({ dimensions, addWord });
 
-const store = createStore(reducer);
+const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 export default store;

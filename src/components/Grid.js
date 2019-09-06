@@ -14,11 +14,44 @@ export default function Grid() {
 	const height = useSelector((state) => state.dimensions.x);
 	const width = useSelector((state) => state.dimensions.y);
 	const gap = useSelector((state) => state.dimensions.gap);
+	const words = useSelector((state) => state.addWord.words);
 	let gridValues = CreateGrid();
 
 	useEffect(() => {
+		console.log(words);
+		addWordToGrid(words);
 		CreateGrid();
 	});
+
+	const addWordToGrid = (words) => {
+		words.forEach((w) => {
+			let randomIndex = Math.floor(Math.random() * w.length);
+			console.log('here and index random is ' + randomIndex);
+			if (randomIndex % 2 === 0) {
+				if (width - randomIndex > 0) {
+					for (let i = 0; i < w.length; i++) {
+						gridValues.forEach((v) => {
+							if (randomIndex === v.x + i) {
+								v = w.charAt(i);
+							}
+						});
+					}
+				}
+			} else {
+				if (height - randomIndex > 0) {
+					for (let i = 0; i < w.length; i++) {
+						gridValues.forEach((v) => {
+							if (randomIndex === v.y + i) {
+								console.log(v);
+
+								v = w.charAt(i);
+							}
+						});
+					}
+				}
+			}
+		});
+	};
 
 	function CreateGrid() {
 		let val = [];
